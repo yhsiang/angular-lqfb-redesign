@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+function getData(callback) {
+      $.ajax({
+          url: 'issues.json',
+          dataType: 'json',
+          success: callback
+      });
+  }
+
+getData(function(data){
+    console.log(data.initiatives);
+  });
+
+</script>
+</head>
+</html>
