@@ -21,12 +21,11 @@ angular.module('app',['app.service']);
 
 function loadLink($scope, $location) {
     $scope.location = $location;
-    console.log($location.path());
     $scope.links = [
-         { url: "events", name: "Events"},
-         { url: "", name: "Issues"},
-         { url: "units", name: "Units"},
-         { url: "members", name: "Members"}
+         { url: "/events", name: "Events"},
+         { url: "/", name: "Issues"},
+         { url: "/units", name: "Units"},
+         { url: "/members", name: "Members"}
     ];
     $scope.isActive = function (url) {
         console.log(url);

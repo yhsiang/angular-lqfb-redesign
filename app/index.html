@@ -14,7 +14,7 @@
     <a class="current" name="show-main-menu">  Issues
     </a>
     <ul class="main-menu" ng-controller="loadLink">
-      <li ng-repeat="link in links" ng-class="isActive(link.url)"><a href="#/{{link.url}}">{{link.name}}</a></li>
+      <li ng-repeat="link in links" ng-class="isActive(link.url)"><a href="#{{link.url}}">{{link.name}}</a></li>
     </ul>
     <ul class="main-menu-spinner" style="display:none">
       <li><a href="#/events">Events</a></li>
