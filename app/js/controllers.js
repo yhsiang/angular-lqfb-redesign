@@ -1,11 +1,11 @@
 angular.module('app.service',['ngResource'])
     .config(function ($routeProvider) {
         $routeProvider
-            .when('/', {controller:ListCtrl, templateUrl:'/app/issue.html'})
+            .when('/', {controller:loadIssue, templateUrl:'/issue.html'})
             .otherwise({redirect:'/'});
     })
     .factory('Issues', function($resource){
-        return $resource('json/issues.json', {},{
+        return $resource('http://yhsiang.github.io/angular-lqfb-redesign/app/json/issues.json', {},{
             get: {method: 'GET', isArray:false},
             list:{isArray:true, method:'get',
                   transformResponse: function (data, headers) {
