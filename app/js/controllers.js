@@ -1,14 +1,14 @@
 angular.module('app.service',['ngResource'])
     .config(function ($routeProvider) {
         $routeProvider
-            .when('/', {controller:loadIssue, templateUrl:'/issue.html'})
-            .when('/events', {controller:loadEvent, templateUrl:'/events.html'})
-            .when('/units', {controller:loadUnit, templateUrl:'/units.html'})
-            .when('/members', {controller:loadMember, templateUrl:'/members.html'})
+            .when('/', {controller:loadIssue, templateUrl:'/angular-lqfb-redesign/app/issue.html'})
+            .when('/events', {controller:loadEvent, templateUrl:'/angular-lqfb-redesign/app/events.html'})
+            .when('/units', {controller:loadUnit, templateUrl:'/angular-lqfb-redesign/app/units.html'})
+            .when('/members', {controller:loadMember, templateUrl:'/angular-lqfb-redesign/app/members.html'})
             .otherwise({redirect:'/'});
     })
     .factory('Issues', function($resource){
-        return $resource('/json/issues.json', {},{
+        return $resource('/angular-lqfb-redesign/app/json/issues.json', {},{
             get: {method: 'GET', isArray:false},
             list:{isArray:true, method:'get',
                   transformResponse: function (data, headers) {
