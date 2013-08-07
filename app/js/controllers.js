@@ -5,7 +5,7 @@ angular.module('app.service',['ngResource'])
             .otherwise({redirect:'/'});
     })
     .factory('Issues', function($resource){
-        return $resource('http://yhsiang.github.io/angular-lqfb-redesign/app/json/issues.json', {},{
+        return $resource('/json/issues.json', {},{
             get: {method: 'GET', isArray:false},
             list:{isArray:true, method:'get',
                   transformResponse: function (data, headers) {
