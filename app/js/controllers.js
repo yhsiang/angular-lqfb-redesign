@@ -2,6 +2,9 @@ angular.module('app.service',['ngResource'])
     .config(function ($routeProvider) {
         $routeProvider
             .when('/', {controller:loadIssue, templateUrl:'/issue.html'})
+            .when('/events', {controller:loadEvent, templateUrl:'/events.html'})
+            .when('/units', {controller:loadUnit, templateUrl:'/units.html'})
+            .when('/members', {controller:loadMember, templateUrl:'/members.html'})
             .otherwise({redirect:'/'});
     })
     .factory('Issues', function($resource){
@@ -22,4 +25,16 @@ function loadIssue($scope, Issues) { //list all the issue in json file
     console.log($scope.issues);  
 
     //$scope.orderProp = 'id';    
+}
+
+function loadEvent($scope) {
+
+}
+
+function loadUnit($scope) {
+
+}
+
+function loadMember($scope) {
+    
 }
