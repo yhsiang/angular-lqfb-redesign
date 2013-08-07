@@ -21,7 +21,8 @@ angular.module('app',['app.service']);
 
 function loadLink($scope, $location) {
     $scope.location = $location;
-     $scope.links = [
+    console.log($location.path());
+    $scope.links = [
          { url: "events", name: "Events"},
          { url: "", name: "Issues"},
          { url: "units", name: "Units"},
