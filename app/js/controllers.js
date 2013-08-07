@@ -1,10 +1,10 @@
-angular.module('app.service',['ngResource']).
+angular.module('app.service',['ngResource'])
     .config(function ($routeProvider) {
         $routeProvider
             .when('/', {controller:ListCtrl, templateUrl:'/app/issue.html'})
             .otherwise({redirect:'/'});
     })
-    factory('Issues', function($resource){
+    .factory('Issues', function($resource){
         return $resource('json/issues.json', {},{
             get: {method: 'GET', isArray:false},
             list:{isArray:true, method:'get',
