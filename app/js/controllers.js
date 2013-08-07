@@ -28,6 +28,10 @@ function loadLink($scope, $location) {
          { url: "units", name: "Units"},
          { url: "members", name: "Members"}
     ];
+    $scope.isActive = function (url) {
+        console.log(url);
+        return (url == $location.path()) ? 'on' : '';
+    }
 }
 
 function loadIssue($scope, Issues) { //list all the issue in json file
