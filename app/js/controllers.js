@@ -28,7 +28,6 @@ function loadLink($scope, $location) {
          { url: "/members", name: "Members"}
     ];
     $scope.isActive = function (url) {
-        console.log(url);
         return (url == $location.path()) ? 'on' : '';
     }
 }
