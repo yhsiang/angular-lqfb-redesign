@@ -19,6 +19,15 @@ angular.module('app.service',['ngResource'])
  
 angular.module('app',['app.service']);
 
+function loadLink($scope, $location) {
+    $scope.location = $location;
+     $scope.links = [
+         { url: "events", name: "Events"},
+         { url: "", name: "Issues"},
+         { url: "units", name: "Units"},
+         { url: "members", name: "Members"}
+    ];
+}
 
 function loadIssue($scope, Issues) { //list all the issue in json file
     $scope.issues = Issues.list(); // using list(), specs up in factoring
@@ -36,5 +45,5 @@ function loadUnit($scope) {
 }
 
 function loadMember($scope) {
-    
+
 }

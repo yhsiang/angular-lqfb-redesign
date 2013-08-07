@@ -9,15 +9,12 @@
     <script src="http://code.angularjs.org/1.1.3/angular-resource.min.js"></script>
 </head>
 
-<body >
+<body>
   <section class="bar nav">
     <a class="current" name="show-main-menu">  Issues
     </a>
-    <ul class="main-menu">
-      <li><a href="#/events">Events</a></li>
-      <li class="on"><a href="#/">Issues</a></li>
-      <li><a href="#/units">Units</a></li>
-      <li><a href="#/members">Members</a></li>
+    <ul class="main-menu" ng-controller="loadLink">
+      <li ng-repeat="link in links" ng-class="(link.url == location.path() && 'active')"><a href="#/{{link.url}}">{{link.name}}</a></li>
     </ul>
     <ul class="main-menu-spinner" style="display:none">
       <li><a href="#/events">Events</a></li>
@@ -43,7 +40,7 @@
   </section>
 
   <section id="content-wrapper" ng-view>
-    
+
   </section>  
 </body>
 </html>
