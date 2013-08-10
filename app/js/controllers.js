@@ -20,7 +20,10 @@ angular.module('app.service',['ngResource'])
     .factory('Initiative', function ($resource){
         return $resource('http://apitest.liquidfeedback.org\\:25520/initiative',
             {alt:'json', callback:'JSON_CALLBACK'},{
-            get: {method: 'get', isArray:false},
+            get: {method: 'jsonp', params:{issue_id: '@issue_id'}, isArray:true,
+                  transformResponse: function (data, headers) {
+                    return data.result;
+                }},
             list:{isArray:true, method:'jsonp',
                   transformResponse: function (data, headers) {
                     return data.result;
@@ -85,10 +88,16 @@ function loadProfileMenu($scope) {
     ];
 }
 function loadIssue($scope, Issues, Initiative, Area) { //list all the issue in json file
-    $scope.initiatives = Initiative.list();
-    $scope.issues = Issues.list();   
-    $scope.areas = Area.list();
-    console.log($scope.initiatives);
+    getIssues = function () {
+        var promise = Issues.list();
+        promise.$then(function(result){
+            for(var k in result.data) {
+                result.data[k].initiatives = Initiative.get({issue_id: result.data[k].id});
+            }
+            $scope.issues = result.data;
+        });
+    }
+    getIssues();    
     $scope.getStateClass = function (index) {
         var css = ["discussion", "voting", "admission", "verification"];
         return css[index%4];
