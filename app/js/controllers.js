@@ -1,22 +1,62 @@
 angular.module('app.service',['ngResource'])
     .config(function ($routeProvider) {
         $routeProvider
-            .when('/', {controller:loadIssue, templateUrl:'/angular-lqfb-redesign/app/issue.html'})
-            .when('/events', {controller:loadEvent, templateUrl:'/angular-lqfb-redesign/app/events.html'})
-            .when('/units', {controller:loadUnit, templateUrl:'/angular-lqfb-redesign/app/units.html'})
-            .when('/members', {controller:loadMember, templateUrl:'/angular-lqfb-redesign/app/members.html'})
+            .when('/', {controller:loadIssue, templateUrl:'/issues'})
+            .when('/events', {controller:loadEvent, templateUrl:'/events'})
+            .when('/units', {controller:loadUnit, templateUrl:'/units'})
+            .when('/members', {controller:loadMember, templateUrl:'/members'})
             .otherwise({redirect:'/'});
     })
-    .factory('Issues', function($resource){
-        return $resource('/angular-lqfb-redesign/app/json/issues.json', {},{
-            get: {method: 'GET', isArray:false},
-            list:{isArray:true, method:'get',
+    .factory('Issues', function ($resource){
+        return $resource('http://apitest.liquidfeedback.org\\:25520/issue',
+            {alt:'json', callback:'JSON_CALLBACK'},{
+            get: {method: 'get', isArray:false},
+            list:{isArray:true, method:'jsonp',
                   transformResponse: function (data, headers) {
-                  return JSON.parse(data).initiatives; 
+                    return data.result;
                 }}
         });
-    }); // factoring 'Issues' to handle $resource response 
- 
+    }) // factoring 'Issues' to handle $resource response 
+    .factory('Initiative', function ($resource){
+        return $resource('http://apitest.liquidfeedback.org\\:25520/initiative',
+            {alt:'json', callback:'JSON_CALLBACK'},{
+            get: {method: 'get', isArray:false},
+            list:{isArray:true, method:'jsonp',
+                  transformResponse: function (data, headers) {
+                    return data.result;
+                }}
+        });        
+    })
+    .factory('Area', function ($resource){
+        return $resource('http://apitest.liquidfeedback.org\\:25520/area', 
+                    {alt:'json', callback:'JSON_CALLBACK'},{
+            get: {method: 'get', isArray:false},
+            list:{isArray:true, method:'jsonp',
+                  transformResponse: function (data, headers) {
+                    return data.result;
+                }}   
+        });    
+    })
+    .factory('Unit', function ($resource){
+        return $resource('http://apitest.liquidfeedback.org\\:25520/unit', 
+                    {alt:'json', callback:'JSON_CALLBACK'},{
+            get: {method: 'get', isArray:false},
+            list:{isArray:true, method:'jsonp',
+                  transformResponse: function (data, headers) {
+                    return data.result;
+                }}   
+        });    
+    })
+    .factory('Member', function ($resource){
+        return $resource('http://apitest.liquidfeedback.org\\:25520/member', 
+                    {alt:'json', callback:'JSON_CALLBACK'},{
+            get: {method: 'get', isArray:false},
+            list:{isArray:true, method:'jsonp',
+                  transformResponse: function (data, headers) {
+                    return data.result;
+                }}   
+        });    
+    }); 
 angular.module('app',['app.service']);
 
 function loadLink($scope, $location) {
@@ -32,11 +72,31 @@ function loadLink($scope, $location) {
     }
 }
 
-function loadIssue($scope, Issues) { //list all the issue in json file
-    $scope.issues = Issues.list(); // using list(), specs up in factoring
-    console.log($scope.issues);  
+function loadAction($scope) {
+    $scope.actions = [
+        { name:"new-issue", symbol: "+"}
+    ];
+}
 
-    //$scope.orderProp = 'id';    
+function loadProfileMenu($scope) {
+
+    $scope.items = [
+        {name: "※　Profile"}
+    ];
+}
+function loadIssue($scope, Issues, Initiative, Area) { //list all the issue in json file
+    $scope.initiatives = Initiative.list();
+    $scope.issues = Issues.list();   
+    $scope.areas = Area.list();
+    $scope.getStateClass = function (index) {
+        var css = ["discussion", "voting", "admission", "verification"];
+        return css[index%4];
+    }
+    $scope.getStateClass = function (index) {
+        var css = ["Discussion", "Voting", "New", "Frozen"];
+        return css[index%4];
+    }
+
 }
 
 function loadEvent($scope) {
