@@ -7,9 +7,9 @@ angular.module('app.service',['ngResource'])
             .when('/members', {controller:loadMember, templateUrl:'/members'})
             .otherwise({redirect:'/'});
     })
-    .factory('Issues', function ($resource){
+    .factory('Issues', function ($resource, Initiative){
         return $resource('http://apitest.liquidfeedback.org\\:25520/issue',
-            {alt:'json', callback:'JSON_CALLBACK'},{
+            {callback:'JSON_CALLBACK'},{
             get: {method: 'get', isArray:false},
             list:{isArray:true, method:'jsonp',
                   transformResponse: function (data, headers) {
@@ -20,8 +20,11 @@ angular.module('app.service',['ngResource'])
     .factory('Initiative', function ($resource){
         return $resource('http://apitest.liquidfeedback.org\\:25520/initiative',
             {alt:'json', callback:'JSON_CALLBACK'},{
-            get: {method: 'get', isArray:false},
-            list:{isArray:true, method:'jsonp',
+            get: {method: 'jsonp', params:{issue_id: '@issue_id'}, isArray:true,
+                  transformResponse: function (data, headers) {
+                    return data.result;
+                }},
+            list:{method:'jsonp', isArray:true,
                   transformResponse: function (data, headers) {
                     return data.result;
                 }}
@@ -85,14 +88,23 @@ function loadProfileMenu($scope) {
     ];
 }
 function loadIssue($scope, Issues, Initiative, Area) { //list all the issue in json file
-    $scope.initiatives = Initiative.list();
-    $scope.issues = Issues.list();   
-    $scope.areas = Area.list();
+
+    getIssues = function () {
+        var promise = Issues.list();
+        promise.$then(function(result){
+            for(var k in result.data) {
+                result.data[k].initiatives = Initiative.get({issue_id: result.data[k].id});
+            }
+            $scope.issues = result.data;
+        });
+    }
+    getIssues();
+  //  $scope.initiatives = Initiative.get({issue_id: 1});
     $scope.getStateClass = function (index) {
         var css = ["discussion", "voting", "admission", "verification"];
         return css[index%4];
     }
-    $scope.getStateClass = function (index) {
+    $scope.getState = function (index) {
         var css = ["Discussion", "Voting", "New", "Frozen"];
         return css[index%4];
     }
