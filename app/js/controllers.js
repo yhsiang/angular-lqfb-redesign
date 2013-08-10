@@ -88,11 +88,12 @@ function loadIssue($scope, Issues, Initiative, Area) { //list all the issue in j
     $scope.initiatives = Initiative.list();
     $scope.issues = Issues.list();   
     $scope.areas = Area.list();
+    console.log($scope.initiatives);
     $scope.getStateClass = function (index) {
         var css = ["discussion", "voting", "admission", "verification"];
         return css[index%4];
     }
-    $scope.getStateClass = function (index) {
+    $scope.getState = function (index) {
         var css = ["Discussion", "Voting", "New", "Frozen"];
         return css[index%4];
     }
