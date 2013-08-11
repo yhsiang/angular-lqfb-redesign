@@ -4,13 +4,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=development ./node_modules/.bin/nodemon app.js"
+    "start": "node ./node_modules/brunch/bin/brunch watch --server"
   },
-  "dependencies": {
-    "express": "3.3.1",
-    "jade": "*",
-    "less-middleware": "*"
-  },
+  "dependencies": {},
   "devDependencies": {
     "brunch": "1.5.x",
     "javascript-brunch": "1.5.x",

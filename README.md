@@ -9,7 +9,7 @@ $ npm i
 ```
 Start Server
 ```
-$ node app
+$ npm start
 ```
 
 By now the REST call is just a call to a local json file.
