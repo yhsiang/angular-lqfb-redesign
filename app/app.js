@@ -11,7 +11,7 @@ angular.module('app.service',['ngResource'])
         return $resource('http://apitest.liquidfeedback.org\\:25520/issue',
             {callback:'JSON_CALLBACK'},{
             get: {method: 'get', isArray:false},
-            list:{isArray:true, method:'jsonp',
+            list:{method:'jsonp', params:{limit: '@limit'}, isArray:true,
                   transformResponse: function (data, headers) {
                     return data.result;
                 }}
@@ -33,7 +33,10 @@ angular.module('app.service',['ngResource'])
     .factory('Area', function ($resource){
         return $resource('http://apitest.liquidfeedback.org\\:25520/area', 
                     {alt:'json', callback:'JSON_CALLBACK'},{
-            get: {method: 'get', isArray:false},
+            get: {method: 'jsonp', params:{area_id: '@area_id'}, isArray:false,
+                  transformResponse: function (data, headers) {
+                    return data.result[0];
+                }},
             list:{isArray:true, method:'jsonp',
                   transformResponse: function (data, headers) {
                     return data.result;
@@ -43,7 +46,10 @@ angular.module('app.service',['ngResource'])
     .factory('Unit', function ($resource){
         return $resource('http://apitest.liquidfeedback.org\\:25520/unit', 
                     {alt:'json', callback:'JSON_CALLBACK'},{
-            get: {method: 'get', isArray:false},
+            get: {method: 'jsonp', params:{unit_id: '@unit_id'}, isArray:false,
+                  transformResponse: function (data, headers) {
+                    return data.result[0];
+                }},            
             list:{isArray:true, method:'jsonp',
                   transformResponse: function (data, headers) {
                     return data.result;
@@ -87,19 +93,27 @@ function loadProfileMenu($scope) {
         {name: "※　Profile"}
     ];
 }
-function loadIssue($scope, Issues, Initiative, Area) { //list all the issue in json file
+function loadIssue($scope, Issues, Initiative, Area, Unit) { //list all the issue in json file
 
     getIssues = function () {
-        var promise = Issues.list();
+        var promise = Issues.list({limit: 30});
         promise.$then(function(result){
             for(var k in result.data) {
                 result.data[k].initiatives = Initiative.get({issue_id: result.data[k].id});
+                result.data[k].area = Area
+                    .get({area_id: result.data[k].area_id})
+                    .$then(function(value) {
+                        if(value.status == '200') {
+                            value.data.unit = Unit.get({unit_id: value.data.unit_id});
+                            console.log(value.data);
+                            return value.data;
+                        }
+                    });
             }
             $scope.issues = result.data;
         });
     }
     getIssues();
-  //  $scope.initiatives = Initiative.get({issue_id: 1});
     $scope.getStateClass = function (index) {
         var css = ["discussion", "voting", "admission", "verification"];
         return css[index%4];
@@ -108,7 +122,6 @@ function loadIssue($scope, Issues, Initiative, Area) { //list all the issue in j
         var css = ["Discussion", "Voting", "New", "Frozen"];
         return css[index%4];
     }
-
 }
 
 function loadEvent($scope) {
