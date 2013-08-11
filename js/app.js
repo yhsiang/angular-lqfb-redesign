@@ -1,10 +1,10 @@
 angular.module('app.service',['ngResource'])
     .config(function ($routeProvider) {
         $routeProvider
-            .when('/', {controller:loadIssue, templateUrl:'/partials/issues.html'})
-            .when('/events', {controller:loadEvent, templateUrl:'/partials/events.html'})
-            .when('/units', {controller:loadUnit, templateUrl:'/partials/units.html'})
-            .when('/members', {controller:loadMember, templateUrl:'/partials/members.html'})
+            .when('/', {controller:loadIssue, templateUrl:'partials/issues.html'})
+            .when('/events', {controller:loadEvent, templateUrl:'partials/events.html'})
+            .when('/units', {controller:loadUnit, templateUrl:'partials/units.html'})
+            .when('/members', {controller:loadMember, templateUrl:'partials/members.html'})
             .otherwise({redirect:'/'});
     })
     .factory('Issues', function ($resource, Initiative){
