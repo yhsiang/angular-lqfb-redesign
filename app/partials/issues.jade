@@ -19,10 +19,10 @@ div(ng-repeat="issue in issues")
     span {{key.name}}
   footer.bar.level-3
     span.meta-text
-      span ◆ g0v
+      span ◆ {{issue.area.unit.name}}
       span.description-icon
-      span ◎ Hackathon
+      span ◎ {{issue.area.name}}
       span.description-icon
-      span § Fast Poll #12
+      span § Fast Poll # {{issue.policy_id}}
     span.action
       a.action-icon(href="#/") >
