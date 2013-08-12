@@ -1,0 +1,10 @@
+div(ng-repeat="event in events")
+    header.bar.level-1.issue
+      span.time-left.meta-text {{event.occurrence}}
+    article.bar.level-2.initiative-title 
+      span.meta-text {{event.event}}: 
+      span.description {{event.state}}
+    footer.bar.level-3
+      span.meta-text i{{event.issue_id}} Issue Name
+      
+      

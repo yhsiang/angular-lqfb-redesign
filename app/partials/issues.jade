@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 div(ng-repeat="issue in issues")
   header.bar.level-1.issue
     span.phase(class="{{getStateClass($index)}}") {{getState($index)}}
@@ -25,4 +26,33 @@ div(ng-repeat="issue in issues")
       span.description-icon
       span § Fast Poll # {{issue.policy_id}}
     span.action
+=======
+div(ng-repeat="issue in issues")
+  header.bar.level-1.issue
+    span.phase(class="{{getStateClass($index)}}") {{getState($index)}}
+    span.time-left.meta-text {{issue.admission_time.days}} days left
+    span.action
+      a.action-icon.new-initiative +
+      a.action-icon.add-interest ☆
+      a.action-delegation ● &gt; ●-●
+  article.bar.level-2.initiative-title(ng-repeat="key in issue.initiatives")
+    span.user-status.action
+      span.status.direct-support ♂
+      a.progress-bar(name="show-initiative-members")
+        span.progress-amount.direct-support
+        span.progress-amount.indirect-support
+          span.progress-number {{key.satisfied_supporter_count}}
+        span.progress-amount.potential-support
+    span.meta-text i{{key.issue_id}}
+    span.description-icon ■
+    span {{key.name}}
+  footer.bar.level-3
+    span.meta-text
+      span ◆ {{issue.area.unit.name}}
+      span.description-icon
+      span ◎ {{issue.area.name}}
+      span.description-icon
+      span § Fast Poll # {{issue.policy_id}}
+    span.action
+>>>>>>> 50f944d21c073fd68ab2cc775e9886ec3f57a5b2
       a.action-icon(href="#/issue/{{issue.id}}") >

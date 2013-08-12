@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .issue-detail-title
 	header.bar.level-1.issue
 		span.phase.discussion Discussion
@@ -91,3 +92,98 @@
 		// not yet done
 	footer.bar.level-1.meta-text
 		span Created...
+=======
+.issue-detail-title
+	header.bar.level-1.issue
+		span.phase.discussion Discussion
+		span.time-left.meta-text 1 day 3 hrs left
+		span.action
+			a.action-icon.new-initiative +
+			a.action-icon.add-interest ☆
+			a.action-delegation● > ●-●-
+.issue-detail-content
+	aside.level-2.meta-text
+		span.location
+			span ◆ {{issue.area.unit.name}} 
+			span.description-icon >
+			span ◎ {{issue.area.name}}
+			span.description-icon >
+			span § Fast Poll # {{issue.policy_id}}
+		span.timestamp
+			span  {{issue.created | date: 'yyyy-MM-dd HH:mm'}}
+	.initiative-wrapper(ng-repeat="key in initiatives")
+		article.bar.level-2.initiative-title
+			span.user-status.action
+				span.status.direct-support
+				a.progress-bar(name="show-iniative-members")
+					span.progress-amount.direct-support
+					span.progress-amount.indirect-support
+						span.progress-number {{key.satisfied_supporter_count}}
+					span.progress-amount.potential-support
+			span.meta-text i{{key.issue_id}}
+			span.description-icon ■
+			span  {{key.name}}
+		aside.bar.level-2.initiative-members(style="display: none")
+		aside.bar.level-2.initiative-meta
+			span.action
+				a.action-icon(name="support-initiative")☆
+				a.action-icon(name="subscribe-initiative")☆
+				a.action-icon(name="collapse-initiative")↑
+				a.action-icon(name="expand-initiative")↓
+			span.meta-text Yesterday 17:32 ● clkao
+		article.bar.level-2.initiative-content(style="display: block")
+			span
+				|Fuga explicabo aut consequuntur non et assumenda. itaque ad possimus error quis id laboriosam aut aspernatur impedit minus. asperiores eum quo dicta voluptas vel voluptatem aut totam odit quasi voluptas dignissimos numquam minus. aut qui alias saepe ea facere voluptatum qui autem unde officia. quis odit est exercitationem dolorem et omnis. aut sit maxime hic quis        
+		.suggestions-wrapper(style="display: block")
+			aside.bar.level-2.initiative-suggestion
+				span.action
+					a.action-icon.new(name="new-suggestion")＋
+					a.action-icon.collapse(name="collapse-suggestions")↑ 
+					a.action-icon.expand(name="expand-suggestions")↓
+				span Suggestions (3)
+			.suggestion-wrapper
+				header.bar.level-3.suggestion-title
+					span.user-status.action
+						span.status.direct-support ♀
+						a.progress-bar(name="show-suggestion-members")
+							span.progress-amount.direct-support
+							span.progress-amount.indirect-support
+								span.progress-number 25
+							span.progress-amount.potential-support
+						span.status.direct-support ♀
+						a.progress-bar(name="show-suggestion-members")
+							span.progress-amount.direct-support
+							span.progress-amount.indirect-support
+								span.progress-number 25
+							span.progress-amount.potential-support
+					span.description-icon ■
+					span  Qui et dicta voluptatem nesciunt ea nam maiores nemo
+				aside.bar(style="display: none")
+				aside.bar(style="display: none")
+				article.bar.level-3.suggestion-content(style="display: none")
+		.argument-pros-wrapper(style="display: block")
+			aside.bar.level-2.initiative-argument
+				span.action
+					a.action-icon(name="new-arugment-pro")+
+					a.action-icon(name="collapse-arugment-pros")↑ 
+					a.action-icon(name="expand-arugment-pros")↓
+				span Argument Pros (2)
+			.argument-pro-wrapper
+				header.bar.level-3.argument-title
+					span.user-status.action
+						a(name="show-argument-pro-members")
+							span.status.direct-support ♀
+							span.rating +25
+							span.status.direct-support ♀
+							span.rating -25
+							span.rating =0
+					span.description-icon ■
+					span Perspiciatis sapiente modi culpa
+				aside.bar.level-3.argument-members(style="display: none")
+				aside.bar.level-3.argument-meta(style="display: none")
+				article.bar.level-3.argument-content(style="display:none")
+		.argument-cons-wrapper(style="display: block")
+		// not yet done
+	footer.bar.level-1.meta-text
+		span Created...
+>>>>>>> 50f944d21c073fd68ab2cc775e9886ec3f57a5b2
