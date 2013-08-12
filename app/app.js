@@ -69,6 +69,16 @@ angular.module('app.service',['ngResource'])
                     return data.result;
                 }}   
         });    
+    })
+    .factory('Event', function ($resource){
+        return $resource('http://apitest.liquidfeedback.org\\:25520/event', 
+                    {alt:'json', callback:'JSON_CALLBACK'},{
+            get: {method: 'get', isArray:false},
+            list:{isArray:true, method:'jsonp',
+                  transformResponse: function (data, headers) {
+                    return data.result;
+                }}   
+        });    
     });
 angular.module('app',['app.service']);
 
@@ -146,14 +156,62 @@ function loadIssue($scope, $routeParams, Issues, Initiative, Area, Unit) {
   }
 }
 
-function loadEvent($scope) {
+function loadEvent($scope, Event) {
+    getEvents = function () {
+        var promise = Event.list({limit: 30});
+        promise.$then(function(result){
+            for(var k in result.data) {
+                result.data[k].events = Event.get({id: result.data[k].id});
+                
+                console.log(result.data[k]); 
+                
+            }
+            
+            $scope.events = result.data;
+            
+        });
+        
+        //to add state_change array
+    }
+
+   getEvents();
+}
+
+function loadUnit($scope, Unit) {
+    getUnits = function () {
+        var promise = Unit.list({limit: 30});
+        promise.$then(function(result){
+            for(var k in result.data) {
+                result.data[k].units = Unit.get({id: result.data[k].id});
+                //if(result.data[k].parent_id != null){
+                    console.log(result.data[k].parent_id)
+                    //to build the unit tree for diplaying with css classes
+                
+                //}
+                console.log(result.data[k]); 
+                
+            }
+            $scope.units = result.data;
+        });
+    }
+
+   getUnits();
 
 }
 
-function loadUnit($scope) {
+function loadMember($scope, Member) {
+    getMembers = function () {
+        var promise = Member.list({limit: 30});
+        promise.$then(function(result){
+            for(var k in result.data) {
+                result.data[k].members = Member.get({id: result.data[k].id});
+                console.log(result.data[k]); 
+                
+            }
+            $scope.members = result.data;
+        });
+    }
 
-}
-
-function loadMember($scope) {
-
+   getMembers();
+    //console.log($scope.members); 
 }
