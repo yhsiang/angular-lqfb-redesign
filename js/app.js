@@ -1,7 +1,8 @@
 angular.module('app.service',['ngResource'])
     .config(function ($routeProvider) {
         $routeProvider
-            .when('/', {controller:loadIssue, templateUrl:'partials/issues.html'})
+            .when('/', {controller:listIssues, templateUrl:'partials/issues.html'})
+            .when('/issue/:issue_id', {controller:loadIssue, templateUrl:'partials/issue.html'})
             .when('/events', {controller:loadEvent, templateUrl:'partials/events.html'})
             .when('/units', {controller:loadUnit, templateUrl:'partials/units.html'})
             .when('/members', {controller:loadMember, templateUrl:'partials/members.html'})
@@ -10,7 +11,10 @@ angular.module('app.service',['ngResource'])
     .factory('Issues', function ($resource, Initiative){
         return $resource('http://apitest.liquidfeedback.org\\:25520/issue',
             {callback:'JSON_CALLBACK'},{
-            get: {method: 'get', isArray:false},
+            get: {method: 'jsonp', params:{id: '@id'}, isArray:false,
+                  transformResponse: function (data, headers) {
+                    return data.result[0];
+                }},
             list:{method:'jsonp', params:{limit: '@limit'}, isArray:true,
                   transformResponse: function (data, headers) {
                     return data.result;
@@ -65,7 +69,7 @@ angular.module('app.service',['ngResource'])
                     return data.result;
                 }}   
         });    
-    }); 
+    });
 angular.module('app',['app.service']);
 
 function loadLink($scope, $location) {
@@ -93,8 +97,7 @@ function loadProfileMenu($scope) {
         {name: "※　Profile"}
     ];
 }
-function loadIssue($scope, Issues, Initiative, Area, Unit) { //list all the issue in json file
-
+function listIssues($scope, Issues, Initiative, Area, Unit) { //list all the issue in json file
     getIssues = function () {
         var promise = Issues.list({limit: 30});
         promise.$then(function(result){
@@ -105,7 +108,6 @@ function loadIssue($scope, Issues, Initiative, Area, Unit) { //list all the issu
                     .$then(function(value) {
                         if(value.status == '200') {
                             value.data.unit = Unit.get({unit_id: value.data.unit_id});
-                            console.log(value.data);
                             return value.data;
                         }
                     });
@@ -114,6 +116,7 @@ function loadIssue($scope, Issues, Initiative, Area, Unit) { //list all the issu
         });
     }
     getIssues();
+
     $scope.getStateClass = function (index) {
         var css = ["discussion", "voting", "admission", "verification"];
         return css[index%4];
@@ -121,6 +124,22 @@ function loadIssue($scope, Issues, Initiative, Area, Unit) { //list all the issu
     $scope.getState = function (index) {
         var css = ["Discussion", "Voting", "New", "Frozen"];
         return css[index%4];
+    }
+}
+function loadIssue($scope, $routeParams, Issues, Initiative, Area, Unit) {
+    var issue_id = $routeParams.issue_id;
+    $scope.initiatives = Initiative.get({issue_id: issue_id});
+    $scope.issue = Issues.get({id: issue_id})
+                        .$then(function (result) {
+                            result.data.area = Area.get({area_id: result.data.area_id})
+                                                .$then(function(result) {
+                                                    result.data.unit = Unit.get({unit_id: result.data.unit_id});
+                                                    return result.data;
+                                                });
+                            return result.data;
+                        });
+    formatTime = function (time) {
+        console.log(time);
     }
 }
 

@@ -1,0 +1,34 @@
+
+<div class="issue-detail-title">
+  <header class="bar level-1 issue"><span class="phase discussion">Discussion</span><span class="time-left meta-text">1 day 3 hrs left</span><span class="action"><a class="action-icon new-initiative">+</a><a class="action-icon add-interest">☆</a><a class="action-delegation">● > ●-●-</a></span></header>
+</div>
+<div class="issue-detail-content">
+  <aside class="level-2 meta-text"><span class="location"><span>◆ {{issue.area.unit.name}} </span><span class="description-icon">></span><span>◎ {{issue.area.name}}</span><span class="description-icon">></span><span>§ Fast Poll # {{issue.policy_id}}</span></span><span class="timestamp"><span> {{issue.created | date: 'yyyy-MM-dd HH:mm'}}</span></span></aside>
+  <div ng-repeat="key in initiatives" class="initiative-wrapper">
+    <article class="bar level-2 initiative-title"><span class="user-status action"><span class="status direct-support"></span><a name="show-iniative-members" class="progress-bar"><span class="progress-amount direct-support"></span><span class="progress-amount indirect-support"><span class="progress-number">{{key.satisfied_supporter_count}}</span></span><span class="progress-amount potential-support"></span></a></span><span class="meta-text">i{{key.issue_id}}</span><span class="description-icon">■</span><span> {{key.name}}</span></article>
+    <aside style="display: none" class="bar level-2 initiative-members"></aside>
+    <aside class="bar level-2 initiative-meta"><span class="action"><a name="support-initiative" class="action-icon">☆</a><a name="subscribe-initiative" class="action-icon">☆</a><a name="collapse-initiative" class="action-icon">↑</a><a name="expand-initiative" class="action-icon">↓</a></span><span class="meta-text">Yesterday 17:32 ● clkao</span></aside>
+    <article style="display: block" class="bar level-2 initiative-content"><span>Fuga explicabo aut consequuntur non et assumenda. itaque ad possimus error quis id laboriosam aut aspernatur impedit minus. asperiores eum quo dicta voluptas vel voluptatem aut totam odit quasi voluptas dignissimos numquam minus. aut qui alias saepe ea facere voluptatum qui autem unde officia. quis odit est exercitationem dolorem et omnis. aut sit maxime hic quis        </span></article>
+    <div style="display: block" class="suggestions-wrapper">
+      <aside class="bar level-2 initiative-suggestion"><span class="action"><a name="new-suggestion" class="action-icon new">＋</a><a name="collapse-suggestions" class="action-icon collapse">↑ </a><a name="expand-suggestions" class="action-icon expand">↓</a></span><span>Suggestions (3)</span></aside>
+      <div class="suggestion-wrapper">
+        <header class="bar level-3 suggestion-title"><span class="user-status action"><span class="status direct-support">♀</span><a name="show-suggestion-members" class="progress-bar"><span class="progress-amount direct-support"></span><span class="progress-amount indirect-support"><span class="progress-number">25</span></span><span class="progress-amount potential-support"></span></a><span class="status direct-support">♀</span><a name="show-suggestion-members" class="progress-bar"><span class="progress-amount direct-support"></span><span class="progress-amount indirect-support"><span class="progress-number">25</span></span><span class="progress-amount potential-support"></span></a></span><span class="description-icon">■</span><span> Qui et dicta voluptatem nesciunt ea nam maiores nemo</span></header>
+        <aside style="display: none" class="bar"></aside>
+        <aside style="display: none" class="bar"></aside>
+        <article style="display: none" class="bar level-3 suggestion-content"></article>
+      </div>
+    </div>
+    <div style="display: block" class="argument-pros-wrapper">
+      <aside class="bar level-2 initiative-argument"><span class="action"><a name="new-arugment-pro" class="action-icon">+</a><a name="collapse-arugment-pros" class="action-icon">↑ </a><a name="expand-arugment-pros" class="action-icon">↓</a></span><span>Argument Pros (2)</span></aside>
+      <div class="argument-pro-wrapper">
+        <header class="bar level-3 argument-title"><span class="user-status action"><a name="show-argument-pro-members"><span class="status direct-support">♀</span><span class="rating">+25</span><span class="status direct-support">♀</span><span class="rating">-25</span><span class="rating">=0</span></a></span><span class="description-icon">■</span><span>Perspiciatis sapiente modi culpa</span></header>
+        <aside style="display: none" class="bar level-3 argument-members"></aside>
+        <aside style="display: none" class="bar level-3 argument-meta"></aside>
+        <article style="display:none" class="bar level-3 argument-content"></article>
+      </div>
+    </div>
+    <div style="display: block" class="argument-cons-wrapper"></div>
+    <!-- not yet done-->
+  </div>
+  <footer class="bar level-1 meta-text"><span>Created...</span></footer>
+</div>
