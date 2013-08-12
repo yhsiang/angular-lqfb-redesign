@@ -11,7 +11,7 @@ angular.module('app.service',['ngResource'])
     .factory('Issues', function ($resource, Initiative){
         return $resource('http://apitest.liquidfeedback.org\\:25520/issue',
             {callback:'JSON_CALLBACK'},{
-            get: {method: 'jsonp', params:{id: '@id'}, isArray:false,
+            get: {method: 'jsonp', params:{issue_id: '@issue_id'}, isArray:false,
                   transformResponse: function (data, headers) {
                     return data.result[0];
                 }},
@@ -127,20 +127,23 @@ function listIssues($scope, Issues, Initiative, Area, Unit) { //list all the iss
     }
 }
 function loadIssue($scope, $routeParams, Issues, Initiative, Area, Unit) {
-    var issue_id = $routeParams.issue_id;
-    $scope.initiatives = Initiative.get({issue_id: issue_id});
-    $scope.issue = Issues.get({id: issue_id})
-                        .$then(function (result) {
-                            result.data.area = Area.get({area_id: result.data.area_id})
-                                                .$then(function(result) {
-                                                    result.data.unit = Unit.get({unit_id: result.data.unit_id});
-                                                    return result.data;
-                                                });
-                            return result.data;
-                        });
-    formatTime = function (time) {
-        console.log(time);
-    }
+  var issue_id = $routeParams.issue_id;
+  $scope.initiatives = Initiative.get({issue_id: issue_id});
+  $scope.issue 
+    = Issues.get({issue_id: issue_id})
+        .$then(function (result) {
+          result.data.area 
+            = Area.get({area_id: result.data.area_id})
+                .$then(function(result) {
+                  result.data.unit 
+                    = Unit.get({unit_id: result.data.unit_id});
+                  return result.data;
+                });
+          return result.data
+        });
+  formatTime = function (time) {
+    console.log(time);
+  }
 }
 
 function loadEvent($scope) {
