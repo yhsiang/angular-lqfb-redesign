@@ -8,7 +8,7 @@ angular.module('app.service',['ngResource'])
             .when('/members', {controller:loadMember, templateUrl:'partials/members.html'})
             .otherwise({redirect:'/'});
     })
-    .factory('Issues', function ($resource, Initiative){
+    .factory('Issues', function ($resource){
         return $resource('http://apitest.liquidfeedback.org\\:25520/issue',
             {callback:'JSON_CALLBACK'},{
             get: {method: 'jsonp', params:{issue_id: '@issue_id'}, isArray:false,
@@ -70,7 +70,7 @@ angular.module('app.service',['ngResource'])
                 }}   
         });    
     });
-angular.module('app',['app.service']);
+angular.module('app',['app.service', 'ui.bootstrap']);
 
 function loadLink($scope, $location) {
     $scope.location = $location;
@@ -85,9 +85,12 @@ function loadLink($scope, $location) {
     }
 }
 
-function loadAction($scope) {
+function loadAction($scope, $location) {
     $scope.actions = [
-        { name:"new-issue", symbol: "+"}
+        { name:"new-issue", symbol: "+"},
+        { name:"show-issue-filter", symbol: "~"},
+        { name:"search", symbol: "⊕"},
+        { name:"show-hint", symbol: "?"}
     ];
 }
 
@@ -128,7 +131,14 @@ function listIssues($scope, Issues, Initiative, Area, Unit) { //list all the iss
 }
 function loadIssue($scope, $routeParams, Issues, Initiative, Area, Unit) {
   var issue_id = $routeParams.issue_id;
-  $scope.initiatives = Initiative.get({issue_id: issue_id});
+  $scope.initiatives 
+    = Initiative.get({issue_id: issue_id})
+        .$then(function (response){
+            for(var key in response.data) {
+                response.data[key].isCollapsed = true;
+            }
+            return response.data;
+        });
   $scope.issue 
     = Issues.get({issue_id: issue_id})
         .$then(function (result) {
@@ -156,4 +166,11 @@ function loadUnit($scope) {
 
 function loadMember($scope) {
 
+}
+function DropdownCtrl($scope) {
+  $scope.items = [
+    "The first choice!",
+    "And another choice for you.",
+    "but wait! A third!"
+  ];
 }

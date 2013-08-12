@@ -33,13 +33,13 @@
 			span.action
 				a.action-icon(name="support-initiative")☆
 				a.action-icon(name="subscribe-initiative")☆
-				a.action-icon(name="collapse-initiative")↑
-				a.action-icon(name="expand-initiative")↓
+				a.action-icon(name="collapse-initiative", ng-click="key.isCollapsed = true")↑
+				a.action-icon(name="expand-initiative",ng-click="key.isCollapsed = false")↓
 			span.meta-text Yesterday 17:32 ● clkao
-		article.bar.level-2.initiative-content(style="display: block")
+		article.bar.level-2.initiative-content(collapse="key.isCollapsed")
 			span
 				|Fuga explicabo aut consequuntur non et assumenda. itaque ad possimus error quis id laboriosam aut aspernatur impedit minus. asperiores eum quo dicta voluptas vel voluptatem aut totam odit quasi voluptas dignissimos numquam minus. aut qui alias saepe ea facere voluptatum qui autem unde officia. quis odit est exercitationem dolorem et omnis. aut sit maxime hic quis        
-		.suggestions-wrapper(style="display: block")
+		.suggestions-wrapper(style="display: block", collapse="key.isCollapsed")
 			aside.bar.level-2.initiative-suggestion
 				span.action
 					a.action-icon.new(name="new-suggestion")＋
@@ -66,7 +66,7 @@
 				aside.bar(style="display: none")
 				aside.bar(style="display: none")
 				article.bar.level-3.suggestion-content(style="display: none")
-		.argument-pros-wrapper(style="display: block")
+		.argument-pros-wrapper(style="display: block", collapse="key.isCollapsed")
 			aside.bar.level-2.initiative-argument
 				span.action
 					a.action-icon(name="new-arugment-pro")+
@@ -87,7 +87,7 @@
 				aside.bar.level-3.argument-members(style="display: none")
 				aside.bar.level-3.argument-meta(style="display: none")
 				article.bar.level-3.argument-content(style="display:none")
-		.argument-cons-wrapper(style="display: block")
+		.argument-cons-wrapper(style="display: block", collapse="key.isCollapsed")
 		// not yet done
 	footer.bar.level-1.meta-text
 		span Created...

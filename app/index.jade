@@ -23,8 +23,8 @@ html(ng-app="app")
 				li(ng-repeat="link in links")
 			span.action(ng-controller="loadAction")
 				a.action-icon(ng-repeat="action in actions", name="{{action.name}}") {{action.symbol}}
-				span.profile-menu
-					a.action-icon(name="show-profile-menu") me
-					ul.profile-menu-spinner(ng-controller="loadProfileMenu", style="display: none")
-						li(href="#/", ng-repeat="item in items") {{item.name}}
+				span.profile-menu.dropdown(ng-controller="loadProfileMenu")
+					a.action-icon.dropdown-toggle(name="show-profile-menu") me
+					ul.dropdown-menu
+						li(ng-repeat="item in items") {{item.name}}
 		section#content-wrapper(ng-view)
