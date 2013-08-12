@@ -69,8 +69,18 @@ angular.module('app.service',['ngResource'])
                     return data.result;
                 }}   
         });    
+    })
+    .factory('Event', function ($resource){
+        return $resource('http://apitest.liquidfeedback.org\\:25520/event', 
+                    {alt:'json', callback:'JSON_CALLBACK'},{
+            get: {method: 'get', isArray:false},
+            list:{isArray:true, method:'jsonp',
+                  transformResponse: function (data, headers) {
+                    return data.result;
+                }}   
+        });    
     });
-angular.module('app',['app.service']);
+angular.module('app',['app.service', 'ui.bootstrap']);
 
 function loadLink($scope, $location) {
     $scope.location = $location;
@@ -87,7 +97,10 @@ function loadLink($scope, $location) {
 
 function loadAction($scope) {
     $scope.actions = [
-        { name:"new-issue", symbol: "+"}
+        { name:"new-issue", symbol: "+"},
+        { name:"show-issue-filter", symbol: "~"},
+        { name:"search", symbol: "⊕"},
+        { name:"show-hint", symbol: "?"}
     ];
 }
 
@@ -97,6 +110,7 @@ function loadProfileMenu($scope) {
         {name: "※　Profile"}
     ];
 }
+
 function listIssues($scope, Issues, Initiative, Area, Unit) { //list all the issue in json file
     getIssues = function () {
         var promise = Issues.list({limit: 30});
@@ -126,9 +140,17 @@ function listIssues($scope, Issues, Initiative, Area, Unit) { //list all the iss
         return css[index%4];
     }
 }
+
 function loadIssue($scope, $routeParams, Issues, Initiative, Area, Unit) {
   var issue_id = $routeParams.issue_id;
-  $scope.initiatives = Initiative.get({issue_id: issue_id});
+  $scope.initiatives 
+    = Initiative.get({issue_id: issue_id})
+        .$then(function (response){
+            for(var key in response.data) {
+                response.data[key].isCollapsed = true;
+            }
+            return response.data;
+        });
   $scope.issue 
     = Issues.get({issue_id: issue_id})
         .$then(function (result) {
@@ -146,14 +168,62 @@ function loadIssue($scope, $routeParams, Issues, Initiative, Area, Unit) {
   }
 }
 
-function loadEvent($scope) {
+function loadEvent($scope, Event) {
+    getEvents = function () {
+        var promise = Event.list({limit: 30});
+        promise.$then(function(result){
+            for(var k in result.data) {
+                result.data[k].events = Event.get({id: result.data[k].id});
+                
+                console.log(result.data[k]); 
+                
+            }
+            
+            $scope.events = result.data;
+            
+        });
+        
+        //to add state_change array
+    }
+
+   getEvents();
+}
+
+function loadUnit($scope, Unit) {
+    getUnits = function () {
+        var promise = Unit.list({limit: 30});
+        promise.$then(function(result){
+            for(var k in result.data) {
+                result.data[k].units = Unit.get({id: result.data[k].id});
+                //if(result.data[k].parent_id != null){
+                    console.log(result.data[k].parent_id)
+                    //to build the unit tree for diplaying with css classes
+                
+                //}
+                console.log(result.data[k]); 
+                
+            }
+            $scope.units = result.data;
+        });
+    }
+
+   getUnits();
 
 }
 
-function loadUnit($scope) {
+function loadMember($scope, Member) {
+    getMembers = function () {
+        var promise = Member.list({limit: 30});
+        promise.$then(function(result){
+            for(var k in result.data) {
+                result.data[k].members = Member.get({id: result.data[k].id});
+                console.log(result.data[k]); 
+                
+            }
+            $scope.members = result.data;
+        });
+    }
 
-}
-
-function loadMember($scope) {
-
+   getMembers();
+    //console.log($scope.members); 
 }

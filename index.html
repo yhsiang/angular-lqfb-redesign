@@ -22,9 +22,9 @@
       </ul>
       <ul style="display: none" class="main-menu-spinner">
         <li ng-repeat="link in links"></li>
-      </ul><span ng-controller="loadAction" class="action"><a ng-repeat="action in actions" name="{{action.name}}" class="action-icon">{{action.symbol}}</a><span class="profile-menu"><a name="show-profile-menu" class="action-icon">me</a>
-          <ul ng-controller="loadProfileMenu" style="display: none" class="profile-menu-spinner">
-            <li href="#/" ng-repeat="item in items">{{item.name}}</li>
+      </ul><span ng-controller="loadAction" class="action"><a ng-repeat="action in actions" name="{{action.name}}" class="action-icon">{{action.symbol}}</a><span ng-controller="loadProfileMenu" class="profile-menu dropdown"><a name="show-profile-menu" class="action-icon dropdown-toggle">me</a>
+          <ul class="dropdown-menu">
+            <li ng-repeat="item in items">{{item.name}}</li>
           </ul></span></span>
     </section>
     <section id="content-wrapper" ng-view></section>

@@ -1,0 +1,6 @@
+
+<div ng-repeat="event in events">
+  <header class="bar level-1 issue"><span class="time-left meta-text">{{event.occurrence}}</span></header>
+  <article class="bar level-2 initiative-title"> <span class="meta-text">{{event.event}}: </span><span class="description">{{event.state}}</span></article>
+  <footer class="bar level-3"><span class="meta-text">i{{event.issue_id}} Issue Name</span></footer>
+</div>
