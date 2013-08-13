@@ -1,13 +1,4 @@
 angular.module('app.service',['ngResource'])
-    .config(function ($routeProvider) {
-        $routeProvider
-            .when('/', {controller:listIssues, templateUrl:'partials/issues.html'})
-            .when('/issue/:issue_id', {controller:loadIssue, templateUrl:'partials/issue.html'})
-            .when('/events', {controller:loadEvent, templateUrl:'partials/events.html'})
-            .when('/units', {controller:loadUnit, templateUrl:'partials/units.html'})
-            .when('/members', {controller:loadMember, templateUrl:'partials/members.html'})
-            .otherwise({redirect:'/'});
-    })
     .factory('Issues', function ($resource, Initiative){
         return $resource('http://apitest.liquidfeedback.org\\:25520/issue',
             {callback:'JSON_CALLBACK'},{
@@ -24,7 +15,20 @@ angular.module('app.service',['ngResource'])
     .factory('Initiative', function ($resource){
         return $resource('http://apitest.liquidfeedback.org\\:25520/initiative',
             {alt:'json', callback:'JSON_CALLBACK'},{
-            get: {method: 'jsonp', params:{issue_id: '@issue_id'}, isArray:true,
+            get: {method: 'jsonp', params:{issue_id: '@issue_id' }, isArray:true,
+                  transformResponse: function (data, headers) {
+                    return data.result;
+                }},
+            list:{method:'jsonp', isArray:true,
+                  transformResponse: function (data, headers) {
+                    return data.result;
+                }}
+        });        
+    })
+    .factory('Suggestion', function ($resource){
+        return $resource('http://apitest.liquidfeedback.org\\:25520/suggestion',
+            {alt:'json', callback:'JSON_CALLBACK'},{
+            get: {method: 'jsonp', params:{initiative_id: '@initiative_id'}, isArray:true,
                   transformResponse: function (data, headers) {
                     return data.result;
                 }},
@@ -80,8 +84,16 @@ angular.module('app.service',['ngResource'])
                 }}   
         });    
     });
-angular.module('app',['app.service', 'ui.bootstrap']);
-
+angular.module('app',['app.service', 'ui.bootstrap'])
+    .config(function ($routeProvider) {
+        $routeProvider
+            .when('/', {controller:listIssues, templateUrl:'partials/issues.html'})
+            .when('/issue/:issue_id', {controller:loadIssue, templateUrl:'partials/issue.html'})
+            .when('/events', {controller:loadEvent, templateUrl:'partials/events.html'})
+            .when('/units', {controller:loadUnit, templateUrl:'partials/units.html'})
+            .when('/members', {controller:loadMember, templateUrl:'partials/members.html'})
+            .otherwise({redirect:'/'});
+    });
 function loadLink($scope, $location) {
     $scope.location = $location;
     $scope.links = [
@@ -141,15 +153,20 @@ function listIssues($scope, Issues, Initiative, Area, Unit) { //list all the iss
     }
 }
 
-function loadIssue($scope, $routeParams, Issues, Initiative, Area, Unit) {
+function loadIssue($scope, $routeParams, Issues, Initiative, Area, Unit, Suggestion) {
   var issue_id = $routeParams.issue_id;
   $scope.initiatives 
     = Initiative.get({issue_id: issue_id})
         .$then(function (response){
-            for(var key in response.data) {
-                response.data[key].isCollapsed = true;
-            }
-            return response.data;
+            var items = [];
+            angular.forEach(response.data, function (item) {
+                item.isCollapsed = true;
+                item.suggestions = Suggestion.get({initiative_id: item.id});
+                item.suggestionsCollapsed = true;
+                items.push(item);
+            });
+            console.log(items);
+            return items;
         });
   $scope.issue 
     = Issues.get({issue_id: issue_id})
@@ -163,9 +180,6 @@ function loadIssue($scope, $routeParams, Issues, Initiative, Area, Unit) {
                 });
           return result.data
         });
-  formatTime = function (time) {
-    console.log(time);
-  }
 }
 
 function loadEvent($scope, Event) {

@@ -27,12 +27,6 @@ exports.config = {
 		stylesheets: {
 			joinTo: {
 				'css/app.css': /^(app|vendor)/
-			},
-			order: {
-				before: [
-					'vendor/styles/bootstrap.min.css',
-					'vendor/styles/bootstrap-responsive.min.css'
-				]
 			}
 		},
 		templates: {

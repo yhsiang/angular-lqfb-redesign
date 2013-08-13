@@ -43,10 +43,10 @@
 			aside.bar.level-2.initiative-suggestion
 				span.action
 					a.action-icon.new(name="new-suggestion")＋
-					a.action-icon.collapse(name="collapse-suggestions")↑ 
-					a.action-icon.expand(name="expand-suggestions")↓
-				span Suggestions (3)
-			.suggestion-wrapper
+					a.action-icon.collapse(name="collapse-suggestions", ng-click="key.suggestionsCollapsed = true")↑ 
+					a.action-icon.expand(name="expand-suggestions", ng-click="key.suggestionsCollapsed = false")↓
+				span Suggestions ({{key.suggestions.length}})
+			.suggestion-wrapper(ng-repeat="suggestion in key.suggestions", collapse="key.suggestionsCollapsed")
 				header.bar.level-3.suggestion-title
 					span.user-status.action
 						span.status.direct-support ♀
@@ -62,7 +62,7 @@
 								span.progress-number 25
 							span.progress-amount.potential-support
 					span.description-icon ■
-					span  Qui et dicta voluptatem nesciunt ea nam maiores nemo
+					span  {{suggestion.name}}
 				aside.bar(style="display: none")
 				aside.bar(style="display: none")
 				article.bar.level-3.suggestion-content(style="display: none")
