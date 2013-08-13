@@ -37,8 +37,7 @@
 				a.action-icon(name="expand-initiative",ng-click="key.isCollapsed = false")↓
 			span.meta-text {{key.created | date: 'yyyy-MM-dd HH:mm'}} ● {{key.initiator.member.name}}
 		article.bar.level-2.initiative-content(collapse="key.isCollapsed")
-			span
-				|Fuga explicabo aut consequuntur non et assumenda. itaque ad possimus error quis id laboriosam aut aspernatur impedit minus. asperiores eum quo dicta voluptas vel voluptatem aut totam odit quasi voluptas dignissimos numquam minus. aut qui alias saepe ea facere voluptatum qui autem unde officia. quis odit est exercitationem dolorem et omnis. aut sit maxime hic quis        
+			span {{key.draft.content}}        
 		.suggestions-wrapper(style="display: block", collapse="key.isCollapsed")
 			aside.bar.level-2.initiative-suggestion
 				span.action

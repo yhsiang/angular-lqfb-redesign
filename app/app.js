@@ -38,6 +38,19 @@ angular.module('app.service',['ngResource'])
                 }}
         });        
     })
+    .factory('Draft', function ($resource){
+        return $resource('http://apitest.liquidfeedback.org\\:25520/suggestion',
+            {alt:'json', callback:'JSON_CALLBACK'},{
+            get: {method: 'jsonp', params:{initiative_id: '@initiative_id', current_draft: true}, isArray: false,
+                  transformResponse: function (data, headers) {
+                    return data.result[0];
+                }},
+            list:{method:'jsonp', isArray:true,
+                  transformResponse: function (data, headers) {
+                    return data.result;
+                }}
+        });        
+    })    
     .factory('Suggestion', function ($resource){
         return $resource('http://apitest.liquidfeedback.org\\:25520/suggestion',
             {alt:'json', callback:'JSON_CALLBACK'},{
@@ -169,7 +182,7 @@ function listIssues($scope, Issues, Initiative, Area, Unit) { //list all the iss
     }
 }
 
-function loadIssue($scope, $routeParams, Issues, Initiative, Area, Unit, Suggestion, Initiator, Member) {
+function loadIssue($scope, $routeParams, Issues, Initiative, Area, Unit, Suggestion, Initiator, Member, Draft) {
   var issue_id = $routeParams.issue_id;
   $scope.initiatives 
     = Initiative.get({issue_id: issue_id})
@@ -177,6 +190,7 @@ function loadIssue($scope, $routeParams, Issues, Initiative, Area, Unit, Suggest
             var items = [];
             angular.forEach(response.data, function (item) {
                 item.isCollapsed = true;
+                item.draft = Draft.get({initiative_id: item.id});
                 item.suggestions = Suggestion.get({initiative_id: item.id});
                 item.initiator = Initiator.get({initiative_id: item.id})
                                     .$then(function (res) {
