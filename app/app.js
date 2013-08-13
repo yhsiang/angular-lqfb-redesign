@@ -25,6 +25,19 @@ angular.module('app.service',['ngResource'])
                 }}
         });        
     })
+    .factory('Initiator', function ($resource){
+        return $resource('http://apitest.liquidfeedback.org\\:25520/initiator',
+            {alt:'json', callback:'JSON_CALLBACK'},{
+            get: {method: 'jsonp', params:{intiative_id: '@initiative_id' }, isArray:false,
+                  transformResponse: function (data, headers) {
+                    return data.result[0];
+                }},
+            list:{method:'jsonp', isArray:true,
+                  transformResponse: function (data, headers) {
+                    return data.result;
+                }}
+        });        
+    })
     .factory('Suggestion', function ($resource){
         return $resource('http://apitest.liquidfeedback.org\\:25520/suggestion',
             {alt:'json', callback:'JSON_CALLBACK'},{
@@ -67,7 +80,10 @@ angular.module('app.service',['ngResource'])
     .factory('Member', function ($resource){
         return $resource('http://apitest.liquidfeedback.org\\:25520/member', 
                     {alt:'json', callback:'JSON_CALLBACK'},{
-            get: {method: 'get', isArray:false},
+            get: {method: 'jsonp', params:{member_id: '@member_id'}, isArray:false,
+                  transformResponse: function (data, headers) {
+                    return data.result[0];
+                }},
             list:{isArray:true, method:'jsonp',
                   transformResponse: function (data, headers) {
                     return data.result;
@@ -153,7 +169,7 @@ function listIssues($scope, Issues, Initiative, Area, Unit) { //list all the iss
     }
 }
 
-function loadIssue($scope, $routeParams, Issues, Initiative, Area, Unit, Suggestion) {
+function loadIssue($scope, $routeParams, Issues, Initiative, Area, Unit, Suggestion, Initiator, Member) {
   var issue_id = $routeParams.issue_id;
   $scope.initiatives 
     = Initiative.get({issue_id: issue_id})
@@ -162,6 +178,12 @@ function loadIssue($scope, $routeParams, Issues, Initiative, Area, Unit, Suggest
             angular.forEach(response.data, function (item) {
                 item.isCollapsed = true;
                 item.suggestions = Suggestion.get({initiative_id: item.id});
+                item.initiator = Initiator.get({initiative_id: item.id})
+                                    .$then(function (res) {
+                                        res.data.member = Member.get({member_id: res.data.member_id});
+                                        return res.data;
+                                    });
+
                 item.suggestionsCollapsed = true;
                 items.push(item);
             });
