@@ -7,7 +7,7 @@
   <div ng-repeat="key in initiatives" class="initiative-wrapper">
     <article class="bar level-2 initiative-title"><span class="user-status action"><span class="status direct-support"></span><a name="show-iniative-members" class="progress-bar"><span class="progress-amount direct-support"></span><span class="progress-amount indirect-support"><span class="progress-number">{{key.satisfied_supporter_count}}</span></span><span class="progress-amount potential-support"></span></a></span><span class="meta-text">i{{key.issue_id}}</span><span class="description-icon">■</span><span> {{key.name}}</span></article>
     <aside style="display: none" class="bar level-2 initiative-members"></aside>
-    <aside class="bar level-2 initiative-meta"><span class="action"><a name="support-initiative" class="action-icon">☆</a><a name="subscribe-initiative" class="action-icon">☆</a><a name="collapse-initiative" ng-click="key.isCollapsed = true" class="action-icon">↑</a><a name="expand-initiative" ng-click="key.isCollapsed = false" class="action-icon">↓</a></span><span class="meta-text">Yesterday 17:32 ● clkao</span></aside>
+    <aside class="bar level-2 initiative-meta"><span class="action"><a name="support-initiative" class="action-icon">☆</a><a name="subscribe-initiative" class="action-icon">☆</a><a name="collapse-initiative" ng-click="key.isCollapsed = true" class="action-icon">↑</a><a name="expand-initiative" ng-click="key.isCollapsed = false" class="action-icon">↓</a></span><span class="meta-text">{{key.created | date: 'yyyy-MM-dd HH:mm'}} ● {{key.initiator.member.name}}</span></aside>
     <article collapse="key.isCollapsed" class="bar level-2 initiative-content"><span>Fuga explicabo aut consequuntur non et assumenda. itaque ad possimus error quis id laboriosam aut aspernatur impedit minus. asperiores eum quo dicta voluptas vel voluptatem aut totam odit quasi voluptas dignissimos numquam minus. aut qui alias saepe ea facere voluptatum qui autem unde officia. quis odit est exercitationem dolorem et omnis. aut sit maxime hic quis        </span></article>
     <div style="display: block" collapse="key.isCollapsed" class="suggestions-wrapper">
       <aside class="bar level-2 initiative-suggestion"><span class="action"><a name="new-suggestion" class="action-icon new">＋</a><a name="collapse-suggestions" ng-click="key.suggestionsCollapsed = true" class="action-icon collapse">↑ </a><a name="expand-suggestions" ng-click="key.suggestionsCollapsed = false" class="action-icon expand">↓</a></span><span>Suggestions ({{key.suggestions.length}})</span></aside>
@@ -18,17 +18,19 @@
         <article style="display: none" class="bar level-3 suggestion-content"></article>
       </div>
     </div>
-    <div style="display: block" collapse="key.isCollapsed" class="argument-pros-wrapper">
-      <aside class="bar level-2 initiative-argument"><span class="action"><a name="new-arugment-pro" class="action-icon">+</a><a name="collapse-arugment-pros" class="action-icon">↑ </a><a name="expand-arugment-pros" class="action-icon">↓</a></span><span>Argument Pros (2)</span></aside>
-      <div class="argument-pro-wrapper">
-        <header class="bar level-3 argument-title"><span class="user-status action"><a name="show-argument-pro-members"><span class="status direct-support">♀</span><span class="rating">+25</span><span class="status direct-support">♀</span><span class="rating">-25</span><span class="rating">=0</span></a></span><span class="description-icon">■</span><span>Perspiciatis sapiente modi culpa</span></header>
-        <aside style="display: none" class="bar level-3 argument-members"></aside>
-        <aside style="display: none" class="bar level-3 argument-meta"></aside>
-        <article style="display:none" class="bar level-3 argument-content"></article>
-      </div>
-    </div>
-    <div style="display: block" collapse="key.isCollapsed" class="argument-cons-wrapper"></div>
-    <!-- not yet done-->
   </div>
-  <footer class="bar level-1 meta-text"><span>Created...</span></footer>
 </div>
+<!--					
+<div style="display: block" collapse="key.isCollapsed" class="argument-pros-wrapper">
+  <aside class="bar level-2 initiative-argument"><span class="action"><a name="new-arugment-pro" class="action-icon">+</a><a name="collapse-arugment-pros" class="action-icon">↑ </a><a name="expand-arugment-pros" class="action-icon">↓</a></span><span>Argument Pros (2)</span></aside>
+  <div class="argument-pro-wrapper">
+    <header class="bar level-3 argument-title"><span class="user-status action"><a name="show-argument-pro-members"><span class="status direct-support">♀</span><span class="rating">+25</span><span class="status direct-support">♀</span><span class="rating">-25</span><span class="rating">=0</span></a></span><span class="description-icon">■</span><span>Perspiciatis sapiente modi culpa</span></header>
+    <aside style="display: none" class="bar level-3 argument-members"></aside>
+    <aside style="display: none" class="bar level-3 argument-meta"></aside>
+    <article style="display:none" class="bar level-3 argument-content"></article>
+  </div>
+</div>
+<div style="display: block" collapse="key.isCollapsed" class="argument-cons-wrapper"></div>
+<!-- not yet done-->
+-->
+<footer class="bar level-1 meta-text"><span>Created...</span></footer>
