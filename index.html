@@ -16,16 +16,118 @@
     <script src="js/app.js"></script>
   </head>
   <body>
-    <section class="bar nav"><a name="show-main-menu" class="current">Issues</a>
-      <ul ng-controller="loadLink" class="main-menu">
+    <section ng-controller="NavCtrl" class="bar nav"><a name="show-main-menu" class="current">Issues</a>
+      <ul class="main-menu">
         <li ng-repeat="link in links" ng-class="isActive(link.url)"><a href="#{{link.url}}">{{link.name}}</a></li>
       </ul>
       <ul style="display: none" class="main-menu-spinner">
         <li ng-repeat="link in links"></li>
-      </ul><span ng-controller="loadAction" class="action"><a ng-repeat="action in actions" name="{{action.name}}" class="action-icon">{{action.symbol}}</a><span ng-controller="loadProfileMenu" class="profile-menu dropdown"><a name="show-profile-menu" class="action-icon dropdown-toggle">me</a>
+      </ul><span class="action"><a ng-click="filterCollapsed=!filterCollapsed" class="action-icon">Filter</a><a ng-repeat="action in actions" name="{{action.name}}" class="action-icon">{{action.symbol}}</a><span class="profile-menu dropdown"><a name="show-profile-menu" class="action-icon dropdown-toggle">me</a>
           <ul class="dropdown-menu">
             <li ng-repeat="item in items">{{item.name}}</li>
           </ul></span></span>
+      <div collapse="filterCollapsed" class="filter">
+        <div class="row">
+          <div class="shortcut-wrapper span1">
+            <label>Shortcut</label>
+          </div>
+          <div class="span11">
+            <ul>
+              <li> <a>Latest vote results</a></li>
+              <li><a>Voted by delegation</a></li>
+              <li><a>
+                  <Not>yet voted</Not></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="customize-wrapper span1">
+            <label>Customize</label>
+          </div>
+          <div class="span11 radiolist">
+            <div class="row">
+              <label class="radio inline">
+                <input type="radio" checked>All units
+              </label>
+              <label class="radio inline">
+                <input type="radio">My units
+              </label>
+              <label class="radio inline">
+                <input type="radio" checked>All areas
+              </label>
+              <label class="radio inline">
+                <input type="radio">My areas
+              </label>
+            </div>
+            <div class="row">
+              <label class="radio inline">
+                <input type="radio">All issues
+              </label>
+              <label class="radio inline">
+                <input type="radio" checked>Open
+              </label>
+              <label class="radio inline">
+                <input type="radio">Finished
+              </label>
+              <label class="radio inline">
+                <input type="radio">Cancelled	
+              </label>
+            </div>
+            <div class="row">
+              <label class="radio inline extend">-</label>
+              <label class="radio inline">
+                <input type="radio">Any phase
+              </label>
+              <label class="radio inline">
+                <input type="radio">New
+              </label>
+              <label class="radio inline">
+                <input type="radio">Disccusion
+              </label>
+              <label class="radio inline">
+                <input type="radio">Frozen
+              </label>
+              <label class="radio inline">
+                <input type="radio" checked>Voting
+              </label>
+            </div>
+            <div class="row">
+              <label class="radio inline extend">-</label>
+              <label class="radio inline extend">-	</label>
+              <label class="radio inline">
+                <input type="radio">Any
+              </label>
+              <label class="radio inline">
+                <input type="radio">Voted
+              </label>
+              <label class="radio inline">
+                <input type="radio" checked>Not voted
+              </label>
+            </div>
+            <div class="row">
+              <label class="radio inline">
+                <input type="radio">Any
+              </label>
+              <label class="radio inline">
+                <input type="radio" checked>Interested
+              </label>
+              <label class="radio inline extend">-</label>
+              <label class="radio inline">
+                <input type="radio">Any
+              </label>
+              <label class="radio inline">
+                <input type="radio">Initiated
+              </label>
+              <label class="radio inline">
+                <input type="radio">Supported
+              </label>
+              <label class="radio inline">
+                <input type="radio">Potentially supported	
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
     <section id="content-wrapper" ng-view></section>
   </body>

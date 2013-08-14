@@ -7360,6 +7360,7 @@ a {
 }
 /* line 60, ../../../../Downloads/fire.app.windows.201306280124-2726eecb1e/fire.app/lib/ruby/compass_0.12/compass-0.12.2/frameworks/compass/stylesheets/compass/typography/lists/_horizontal-list.scss */
 .nav ul li {
+  height: 32px;
   list-style-image: none;
   list-style-type: none;
   margin-left: 0;
@@ -7383,6 +7384,7 @@ a {
 }
 /* line 366, ../sass/main.scss */
 .nav ul a {
+  text-decoration: none;
   display: block;
   text-align: center;
 }
@@ -7535,6 +7537,37 @@ a {
   border-bottom: 6px #33B5E5;
 }
 
+.filter {
+  margin-top: 40px;
+  background-color: #282828;
+  margin-left: -10px;
+  margin-right: -10px;
+  padding-left: 10px;
+  color: #fff;
+}
+
+.filter ul {
+  margin-left: 0px;
+}
+.filter ul li {
+  display: inline;
+}
+
+.filter ul li a {
+  background-color: #aaa;
+  color: #fff;
+  text-decoration: none;
+  padding: 4px;
+}
+
+.filter .radiolist {
+  padding-left: 20px;
+}
+
+.filter label.extend {
+  padding-left: 0;
+  font-size: 30px;
+}
 /* line 452, ../sass/main.scss */
 .level-1 {
   background-color: #fff;
