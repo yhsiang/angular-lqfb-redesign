@@ -14,17 +14,114 @@ html(ng-app="app")
 		script(src="js/vendor.js")
 		script(src="js/app.js")
 	body
-		section.bar.nav
+		section.bar.nav(ng-controller="NavCtrl")
 			a.current(name="show-main-menu") Issues
-			ul.main-menu(ng-controller="loadLink")
+			ul.main-menu
 				li(ng-repeat="link in links", ng-class="isActive(link.url)")
 					a(href="\#{{link.url}}") {{link.name}}
 			ul.main-menu-spinner(style="display: none")
 				li(ng-repeat="link in links")
-			span.action(ng-controller="loadAction")
+			span.action
+				a.action-icon(ng-click="filterCollapsed=!filterCollapsed") Filter
 				a.action-icon(ng-repeat="action in actions", name="{{action.name}}") {{action.symbol}}
-				span.profile-menu.dropdown(ng-controller="loadProfileMenu")
+				span.profile-menu.dropdown
 					a.action-icon.dropdown-toggle(name="show-profile-menu") me
 					ul.dropdown-menu
 						li(ng-repeat="item in items") {{item.name}}
+			.filter(collapse="filterCollapsed")
+				.row
+					.shortcut-wrapper.span1
+						label Shortcut
+					.span11
+						ul
+							li 
+								a Latest vote results
+							li
+								a Voted by delegation
+							li
+								a
+									Not yet voted
+				.row
+					.customize-wrapper.span1
+						label Customize
+					.span11.radiolist
+						.row
+							label.radio.inline
+								input(type="radio", checked)
+								| All units
+							label.radio.inline
+								input(type="radio")
+								| My units
+							label.radio.inline
+								input(type="radio", checked)
+								| All areas
+							label.radio.inline
+								input(type="radio")
+								| My areas
+						.row
+							label.radio.inline
+								input(type="radio")
+								| All issues
+							label.radio.inline
+								input(type="radio", checked)
+								| Open
+							label.radio.inline
+								input(type="radio")
+								| Finished
+							label.radio.inline
+								input(type="radio")
+								| Cancelled	
+						.row
+							label.radio.inline.extend
+								-
+							label.radio.inline
+								input(type="radio")
+								| Any phase
+							label.radio.inline
+								input(type="radio")
+								| New
+							label.radio.inline
+								input(type="radio")
+								| Disccusion
+							label.radio.inline
+								input(type="radio")
+								| Frozen
+							label.radio.inline
+								input(type="radio", checked)
+								| Voting
+						.row
+							label.radio.inline.extend
+								|-
+							label.radio.inline.extend
+								|-	
+							label.radio.inline
+								input(type="radio")
+								| Any
+							label.radio.inline
+								input(type="radio")
+								| Voted
+							label.radio.inline
+								input(type="radio", checked)
+								| Not voted
+						.row
+							label.radio.inline
+								input(type="radio")
+								| Any
+							label.radio.inline
+								input(type="radio", checked)
+								| Interested
+							label.radio.inline.extend
+								|-
+							label.radio.inline
+								input(type="radio")
+								| Any
+							label.radio.inline
+								input(type="radio")
+								| Initiated
+							label.radio.inline
+								input(type="radio")
+								| Supported
+							label.radio.inline
+								input(type="radio")
+								| Potentially supported	
 		section#content-wrapper(ng-view)

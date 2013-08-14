@@ -123,7 +123,7 @@ angular.module('app',['app.service', 'ui.bootstrap'])
             .when('/members', {controller:loadMember, templateUrl:'partials/members.html'})
             .otherwise({redirect:'/'});
     });
-function loadLink($scope, $location) {
+function NavCtrl($scope, $location) {
     $scope.location = $location;
     $scope.links = [
          { url: "/events", name: "Events"},
@@ -131,25 +131,23 @@ function loadLink($scope, $location) {
          { url: "/units", name: "Units"},
          { url: "/members", name: "Members"}
     ];
+    
     $scope.isActive = function (url) {
         return (url == $location.path()) ? 'on' : '';
     }
-}
 
-function loadAction($scope) {
     $scope.actions = [
         { name:"new-issue", symbol: "+"},
         { name:"show-issue-filter", symbol: "~"},
         { name:"search", symbol: "⊕"},
         { name:"show-hint", symbol: "?"}
     ];
-}
-
-function loadProfileMenu($scope) {
 
     $scope.items = [
         {name: "※　Profile"}
     ];
+
+    $scope.filterCollapsed =true;
 }
 
 function listIssues($scope, Issues, Initiative, Area, Unit) { //list all the issue in json file
