@@ -27,7 +27,7 @@
             <li ng-repeat="item in items">{{item.name}}</li>
           </ul></span></span>
       <div collapse="filterCollapsed" class="filter">
-        <div class="row">
+        <div class="row shortcut">
           <div class="shortcut-wrapper span1">
             <label>Shortcut</label>
           </div>
@@ -40,89 +40,83 @@
             </ul>
           </div>
         </div>
-        <div class="row">
+        <div class="row customize">
           <div class="customize-wrapper span1">
             <label>Customize</label>
           </div>
           <div class="span11 radiolist">
             <div class="row">
               <label class="radio inline">
-                <input type="radio" checked>All units
+                <input type="radio" ng-model="filters.unit" value="global">All units
               </label>
               <label class="radio inline">
-                <input type="radio">My units
+                <input type="radio" ng-model="filters.unit" value="myunits">My units ( All areas )
               </label>
               <label class="radio inline">
-                <input type="radio" checked>All areas
-              </label>
-              <label class="radio inline">
-                <input type="radio">My areas
+                <input type="radio" ng-model="filters.unit" value="myareas">My areas
               </label>
             </div>
             <div class="row">
               <label class="radio inline">
-                <input type="radio">All issues
+                <input type="radio" ng-model="filters.issue" value="all">All issues
               </label>
               <label class="radio inline">
-                <input type="radio" checked>Open
+                <input type="radio" ng-model="filters.issue" value="open">Open
               </label>
               <label class="radio inline">
-                <input type="radio">Finished
+                <input type="radio" ng-model="filters.issue" value="closed">Finished
               </label>
               <label class="radio inline">
-                <input type="radio">Cancelled	
+                <input type="radio" ng-model="filters.issue" value="cancelled">Cancelled	
               </label>
             </div>
             <div class="row">
               <label class="radio inline extend">-</label>
               <label class="radio inline">
-                <input type="radio">Any phase
+                <input type="radio" ng-model="filters.stage" value="any">Any phase
               </label>
               <label class="radio inline">
-                <input type="radio">New
+                <input type="radio" ng-model="filters.stage" value="new">New
               </label>
               <label class="radio inline">
-                <input type="radio">Disccusion
+                <input type="radio" ng-model="filters.stage" value="accepted">Disccusion
               </label>
               <label class="radio inline">
-                <input type="radio">Frozen
+                <input type="radio" ng-model="filters.stage" value="half_frozen">Half Frozen
               </label>
               <label class="radio inline">
-                <input type="radio" checked>Voting
+                <input type="radio" ng-model="filters.stage" value="frozen">Voting
               </label>
             </div>
-            <div class="row">
+            <div ng-show="filters.stage == 'frozen'" class="row">
               <label class="radio inline extend">-</label>
               <label class="radio inline extend">-	</label>
               <label class="radio inline">
-                <input type="radio">Any
+                <input type="radio" ng-model="filters.voting" value="any">Any
               </label>
               <label class="radio inline">
-                <input type="radio">Voted
+                <input type="radio" ng-model="filters.voting" value="voted">Voted
               </label>
               <label class="radio inline">
-                <input type="radio" checked>Not voted
+                <input type="radio" ng-model="filters.voting" value="not_voted">Not voted
               </label>
             </div>
             <div class="row">
               <label class="radio inline">
-                <input type="radio">Any
+                <input type="radio" ng-model="filters.interest" value="any">Any
               </label>
               <label class="radio inline">
-                <input type="radio" checked>Interested
+                <input type="radio" ng-model="filters.interest" value="issue">Interested
               </label>
-              <label class="radio inline extend">-</label>
-              <label class="radio inline">
-                <input type="radio">Any
+              <label ng-show="filters.interest == 'issue'" class="radio inline extend">-</label>
+              <label ng-show="filters.interest == 'issue'" class="radio inline">
+                <input type="radio" ng-model="filters.interest" value="initiated">Initiated
               </label>
-              <label class="radio inline">
-                <input type="radio">Initiated
+              <label ng-show="filters.interest == 'issue'" class="radio inline">
+                <input type="radio" ng-model="filters.interest" value="supported">Supported
               </label>
-              <label class="radio inline">
-                <input type="radio">Supported
-              </label>
-              <label class="radio inline">
-                <input type="radio">Potentially supported	
+              <label ng-show="filters.interest == 'issue'" class="radio inline">
+                <input type="radio" ng-model="filters.interest" value="potentially_supported">Potentially supported	
               </label>
             </div>
           </div>
