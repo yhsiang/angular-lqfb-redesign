@@ -1,4 +1,5 @@
 div(ng-repeat="issue in issues")
+  input(type="hidden", ng-model="filters.issue", value="{{filters.issue}}");
   header.bar.level-1.issue
     span.phase(class="{{getStateClass($index)}}") {{getState($index)}}
     span.time-left.meta-text {{issue.admission_time.days}} days left

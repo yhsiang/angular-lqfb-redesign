@@ -29,7 +29,7 @@ html(ng-app="app")
 					ul.dropdown-menu
 						li(ng-repeat="item in items") {{item.name}}
 			.filter(collapse="filterCollapsed")
-				.row
+				.row.shortcut
 					.shortcut-wrapper.span1
 						label Shortcut
 					.span11
@@ -41,87 +41,81 @@ html(ng-app="app")
 							li
 								a
 									Not yet voted
-				.row
+				.row.customize
 					.customize-wrapper.span1
 						label Customize
 					.span11.radiolist
 						.row
 							label.radio.inline
-								input(type="radio", checked)
+								input(type="radio", ng-model="filters.unit", value="global")
 								| All units
 							label.radio.inline
-								input(type="radio")
-								| My units
+								input(type="radio", ng-model="filters.unit", value="myunits")
+								| My units ( All areas )
 							label.radio.inline
-								input(type="radio", checked)
-								| All areas
-							label.radio.inline
-								input(type="radio")
+								input(type="radio", ng-model="filters.unit", value="myareas")
 								| My areas
 						.row
 							label.radio.inline
-								input(type="radio")
+								input(type="radio", ng-model="filters.issue", value="all")
 								| All issues
 							label.radio.inline
-								input(type="radio", checked)
+								input(type="radio", ng-model="filters.issue", value="open")
 								| Open
 							label.radio.inline
-								input(type="radio")
+								input(type="radio", ng-model="filters.issue", value="closed")
 								| Finished
 							label.radio.inline
-								input(type="radio")
+								input(type="radio", ng-model="filters.issue", value="cancelled")
 								| Cancelled	
 						.row
 							label.radio.inline.extend
 								-
 							label.radio.inline
-								input(type="radio")
+								input(type="radio", ng-model="filters.stage", value="any")
 								| Any phase
 							label.radio.inline
-								input(type="radio")
+								input(type="radio", ng-model="filters.stage", value="new")
 								| New
 							label.radio.inline
-								input(type="radio")
+								input(type="radio", ng-model="filters.stage", value="accepted")
 								| Disccusion
 							label.radio.inline
-								input(type="radio")
-								| Frozen
+								input(type="radio", ng-model="filters.stage", value="half_frozen")
+								| Half Frozen
 							label.radio.inline
-								input(type="radio", checked)
+								input(type="radio", ng-model="filters.stage", value="frozen")
 								| Voting
-						.row
+						.row(ng-show="filters.stage == 'frozen'")
 							label.radio.inline.extend
 								|-
 							label.radio.inline.extend
 								|-	
 							label.radio.inline
-								input(type="radio")
+								input(type="radio", ng-model="filters.voting", value="any")
 								| Any
 							label.radio.inline
-								input(type="radio")
+								input(type="radio", ng-model="filters.voting", value="voted")
 								| Voted
 							label.radio.inline
-								input(type="radio", checked)
+								input(type="radio", ng-model="filters.voting", value="not_voted")
 								| Not voted
 						.row
 							label.radio.inline
-								input(type="radio")
+								input(type="radio", ng-model="filters.interest", value="any")
 								| Any
 							label.radio.inline
-								input(type="radio", checked)
+								input(type="radio", ng-model="filters.interest", value="issue")
 								| Interested
-							label.radio.inline.extend
+							label.radio.inline.extend(ng-show="filters.interest == 'issue'")
 								|-
-							label.radio.inline
-								input(type="radio")
-								| Any
-							label.radio.inline
-								input(type="radio")
+							label.radio.inline(ng-show="filters.interest == 'issue'")
+								input(type="radio", ng-model="filters.interest", value="initiated")
 								| Initiated
-							label.radio.inline
-								input(type="radio")
+							label.radio.inline(ng-show="filters.interest == 'issue'")
+								input(type="radio", ng-model="filters.interest", value="supported")
 								| Supported
-							label.radio.inline
-								input(type="radio")
+							label.radio.inline(ng-show="filters.interest == 'issue'")
+								input(type="radio", ng-model="filters.interest", value="potentially_supported")
 								| Potentially supported	
 		section#content-wrapper(ng-view)
