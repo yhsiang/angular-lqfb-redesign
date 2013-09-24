@@ -24,6 +24,13 @@ Pirate Feedback: frontend / locale / *.lua
 to
 app / locale / *.json
 
+#How to use
+```
+$ node ./lua2json.js translations.zh-TW.lua
+```
+it will generate translations.zh-TW.json
+
+Next
 using angular-translate
 https://github.com/PascalPrecht/angular-translate
 
